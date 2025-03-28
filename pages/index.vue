@@ -3,6 +3,7 @@ import { NButton } from 'naive-ui'
 
 const { $trpc } = useNuxtApp()
 const { push } = useRouter()
+const dialog = useDialog()
 
 const columns = [
   {
@@ -19,7 +20,22 @@ const columns = [
             push({ path: `/${row.id}` })
           },
           type: 'primary'
-        }, 'Edit')
+        }, 'Edit'),
+        h(NButton, {
+          onClick: () => {
+            dialog.error({
+              title: 'Delete Feed',
+              content: 'Are you sure?',
+              positiveText: 'Delete',
+              negativeText: 'Cancel',
+              draggable: false,
+              onPositiveClick: () => {
+                deleteFeed(row.id)
+              }
+            })
+          },
+          type: 'error'
+        }, 'Delete')
       ])
     }
   }
@@ -28,6 +44,13 @@ const columns = [
 const { isPending, data } = useQuery({
   queryKey: ['feeds'],
   queryFn: () => $trpc.feeds.getAll.query()
+})
+
+const { mutate: deleteFeed } = useMutation({
+  mutationFn: id => $trpc.feeds.delete.mutate({ id }),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['feeds'] })
+  }
 })
 </script>
 

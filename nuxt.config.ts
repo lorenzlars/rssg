@@ -77,7 +77,7 @@ export default defineNuxtConfig({
     presets: [
       {
         from: '@tanstack/vue-query',
-        imports: ['useQueryClient', 'useQuery', 'useMutation']
+        imports: ['useQueryClient', 'useQuery', 'useMutation', 'useIsFetching']
       },
       {
         from: '@formkit/zod',

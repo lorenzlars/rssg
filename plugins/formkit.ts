@@ -15,5 +15,7 @@ const config = defaultConfig({
 })
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(plugin, config)
+  nuxtApp.hook('app:created', (app) => {
+    app.use(plugin, config)
+  })
 })
