@@ -12,6 +12,7 @@ datasource db {
 model Feed {
   id          String  @id @default(uuid())
   description String?
+  url         String?
   code        String?
   interval    Int?
   ownerId     String?
