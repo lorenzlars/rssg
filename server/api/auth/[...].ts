@@ -12,6 +12,13 @@ export default NuxtAuthHandler({
       clientSecret: process.env.NUXT_AUTH_GITHUB_CLIENT_SECRET
     })
   ],
+  pages: {
+    signIn: '/auth/signin',
+    signOut: '/auth/signin',
+    error: '/auth/signin',
+    verifyRequest: '/auth/signin',
+    newUser: '/auth/signin'
+  },
   callbacks: {
     jwt({ token, account, profile }) {
       console.log(token, account, profile)
