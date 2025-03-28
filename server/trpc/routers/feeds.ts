@@ -5,13 +5,17 @@ import { feedSchema } from '../schemas'
 export const feeds = router({
   add: protectedProcedure
     .input(feedSchema)
-    .mutation(({ input, ctx }) => {
-      console.log(ctx.user)
+    .mutation(async ({ input, ctx }) => {
+      const user = await ctx.prisma.user.findFirst({
+        where: {
+          email: ctx.user?.email
+        }
+      })
 
       return ctx.prisma.feed.create({
         data: {
           ...input,
-          ownerId: ctx.user?.email
+          ownerId: user.id
         }
       })
     }),
@@ -21,19 +25,31 @@ export const feeds = router({
         id: z.string()
       })
     )
-    .mutation(({ input, ctx }) => {
+    .mutation(async ({ input, ctx }) => {
+      const user = await ctx.prisma.user.findFirst({
+        where: {
+          email: ctx.user?.email
+        }
+      })
+
       return ctx.prisma.feed.delete({
         where: {
           id: input.id,
-          ownerId: ctx.user?.email
+          owner: user
         }
       })
     }),
   getAll: protectedProcedure
-    .query(({ ctx }) => {
+    .query(async ({ ctx }) => {
+      const user = await ctx.prisma.user.findFirst({
+        where: {
+          email: ctx.user?.email
+        }
+      })
+
       return ctx.prisma.feed.findMany({
         where: {
-          ownerId: ctx.user?.email
+          owner: user
         },
         select: {
           id: true,

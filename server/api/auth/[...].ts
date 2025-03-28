@@ -12,33 +12,11 @@ export default NuxtAuthHandler({
       clientSecret: process.env.NUXT_AUTH_GITHUB_CLIENT_SECRET
     })
   ],
-  pages: {
-    signIn: '/auth/signin',
-    signOut: '/auth/signin',
-    error: '/auth/signin',
-    verifyRequest: '/auth/signin',
-    newUser: '/auth/signin'
-  },
   callbacks: {
-    jwt({ token, account, profile }) {
-      console.log(token, account, profile)
-
-      if (account) {
-        token.sessionToken = account.session_token
-      }
-
-      return token
-    },
-    async session({ session, token }) {
-
-      console.log(session, token)
-
+    session: ({ session }) => {
       return {
         ...session,
-        user: {
-          ...session.user,
-          id: ''
-        }
+        user: session.user
       }
     }
   },

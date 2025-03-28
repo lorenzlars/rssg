@@ -1,7 +1,6 @@
 import { Feed } from 'feed'
-import { getServerSession } from '#auth'
 
-const basePath = 'https://www.felixseemann.de'
+const basePath = process.env.NUXT_YOUR_ORIGIN || ''
 
 export default defineEventHandler(async (event) => {
   const { context } = event
@@ -13,25 +12,19 @@ export default defineEventHandler(async (event) => {
     }
   })
 
-  const session = await getServerSession(event)
-
-  console.log(session, feedData)
+  if (!feedData) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: `Feed ${id} not found`
+    })
+  }
 
   const feed = new Feed({
-    title: 'Felix Seemann',
-    description: 'Software engineering blog.',
+    title: feedData.description,
     id: basePath,
     link: basePath,
-    language: 'en',
-    favicon: basePath + '/favicon.ico',
-    copyright: 'All rights reserved 2023, Felix Seemann',
     feedLinks: {
-      rss: basePath + '/rss.xml'
-    },
-    author: {
-      name: 'Felix Seemann',
-      email: 'fseemann@mail.de',
-      link: basePath
+      rss: `${basePath}/api/rss/${id}`
     }
   })
 
