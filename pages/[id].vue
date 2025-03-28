@@ -18,6 +18,7 @@ const [zodPlugin, submitHandler] = createZodPlugin(
 <template>
   <FormKit type="form" :plugins="[zodPlugin]" @submit="submitHandler">
     <FormKit type="text" name="description" />
+    <FormKit type="url" name="url" />
     <FormKit type="code" name="code" />
     <FormKit type="number" name="interval" number />
   </FormKit>

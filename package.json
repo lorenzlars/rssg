@@ -45,7 +45,7 @@
     "@formkit/nuxt": "^1.6.9",
     "@formkit/vue": "^1.6.9",
     "@formkit/zod": "^1.6.9",
-    "@prisma/client": "^4.16.2",
+    "@prisma/client": "^6.5.0",
     "@sidebase/nuxt-auth": "^0.10.1",
     "@tanstack/vue-query": "^5.69.0",
     "monaco-editor": "^0.52.2",
