@@ -42,6 +42,7 @@
     "vue-tsc": "^1.8.27"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.8.0",
     "@formkit/nuxt": "^1.6.9",
     "@formkit/vue": "^1.6.9",
     "@formkit/zod": "^1.6.9",
@@ -49,8 +50,10 @@
     "@sidebase/nuxt-auth": "^0.10.1",
     "@tanstack/vue-query": "^5.69.0",
     "@vercel/analytics": "^1.5.0",
+    "feed": "^4.2.2",
     "monaco-editor": "^0.52.2",
     "naive-ui": "^2.41.0",
+    "next-auth": "4.21.1",
     "trpc-nuxt": "^1.0.4",
     "zod": "^3.24.2"
   }

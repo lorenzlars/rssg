@@ -12,6 +12,15 @@ export default defineNuxtConfig({
     authSecret: process.env.NUXT_AUTH_SECRET
   },
 
+  nitro: {
+    logLevel: process.env.NODE_ENV === 'development' ? 5 : 0,
+    vercel: {
+      config: {
+        bypassToken: process.env.VERCEL_BYPASS_TOKEN
+      }
+    }
+  },
+
   modules: [
     'nuxt-svgo',
     '@sidebase/nuxt-auth',
@@ -54,22 +63,21 @@ export default defineNuxtConfig({
   auth: {
     isEnabled: true,
     globalAppMiddleware: true,
-    disableServerSideAuth: false,
     originEnvKey: 'NUXT_YOUR_ORIGIN',
     provider: {
       type: 'authjs',
-      trustHost: false,
       defaultProvider: 'github',
       addDefaultCallbackUrl: true
-    },
-    sessionRefresh: {
-      enablePeriodically: true,
-      enableOnWindowFocus: true
     }
   },
 
   formkit: {
     autoImport: true
+  },
+
+  sourcemap: {
+    server: process.env.NODE_ENV === 'development',
+    client: process.env.NODE_ENV === 'development'
   },
 
   imports: {

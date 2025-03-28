@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { NButton } from 'naive-ui'
+import { NuxtLink } from '#components'
 
 const { $trpc } = useNuxtApp()
 const { push } = useRouter()
@@ -55,7 +56,21 @@ const columns = [
           ]
         })
     }
+  },
+  {
+    key: 'link',
+    render: (row: RowData) => {
+      return h(NuxtLink, {
+        to: {
+          path: `/api/rss/${row.id}`
+        }
+      },
+      {
+        default: () => 'RSS'
+      })
+    }
   }
+
 ]
 
 const { isPending, data } = useQuery({

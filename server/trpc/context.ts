@@ -1,13 +1,14 @@
 import { H3Event } from 'h3'
-import { getServerSession } from '#auth'
+// import { getServerSession } from '#auth'
 
 export async function createContext (event: H3Event) {
-  const session = await getServerSession(event)
+  // TODO: This util function is not working, further investigation is needed
+  // const session = await getServerSession(event)
+  const session = await $fetch('/api/auth/session', { headers: event.headers })
 
   return {
     session,
-    prisma: event.context.prisma,
-    cookie: parseCookies(event)
+    prisma: event.context.prisma
   }
 }
 

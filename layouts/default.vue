@@ -3,7 +3,7 @@ import { NuxtLink } from '#components'
 
 const isFetching = useIsFetching()
 const loadingBar = useLoadingBar()
-const { logout } = useAuth()
+const { signOut } = useAuth()
 
 watchEffect(() => {
   if (isFetching.value) {
@@ -46,7 +46,7 @@ const menuOptions: MenuOption[] = [
           />
         </nav>
 
-        <n-button type="primary" @click="logout">
+        <n-button type="primary" @click="signOut">
           Logout
         </n-button>
       </div>

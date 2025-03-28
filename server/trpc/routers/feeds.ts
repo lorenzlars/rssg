@@ -1,18 +1,21 @@
 import { z } from 'zod'
-import { publicProcedure, router } from '../trpc'
+import { protectedProcedure, router } from '../trpc'
 import { feedSchema } from '../schemas'
 
 export const feeds = router({
-  add: publicProcedure
+  add: protectedProcedure
     .input(feedSchema)
     .mutation(({ input, ctx }) => {
+      console.log(ctx.user)
+
       return ctx.prisma.feed.create({
         data: {
-          ...input
+          ...input,
+          ownerId: ctx.user?.email
         }
       })
     }),
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(
       z.object({
         id: z.string()
@@ -21,13 +24,17 @@ export const feeds = router({
     .mutation(({ input, ctx }) => {
       return ctx.prisma.feed.delete({
         where: {
-          id: input.id
+          id: input.id,
+          ownerId: ctx.user?.email
         }
       })
     }),
-  getAll: publicProcedure
+  getAll: protectedProcedure
     .query(({ ctx }) => {
       return ctx.prisma.feed.findMany({
+        where: {
+          ownerId: ctx.user?.email
+        },
         select: {
           id: true,
           description: true,
