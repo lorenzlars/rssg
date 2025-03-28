@@ -30,7 +30,8 @@ export const feeds = router({
       return ctx.prisma.feed.findMany({
         select: {
           id: true,
-          description: true
+          description: true,
+          interval: true
         }
       })
     })

@@ -22,7 +22,9 @@ const menuOptions: MenuOption[] = [
             name: 'index'
           }
         },
-        { default: () => 'Home' }
+        {
+          default: () => 'Home'
+        }
       ),
     key: 'home'
   }

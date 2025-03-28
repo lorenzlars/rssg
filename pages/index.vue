@@ -4,6 +4,7 @@ import { NButton } from 'naive-ui'
 const { $trpc } = useNuxtApp()
 const { push } = useRouter()
 const dialog = useDialog()
+const queryClient = useQueryClient()
 
 const columns = [
   {
@@ -11,32 +12,48 @@ const columns = [
     key: 'description'
   },
   {
+    title: 'Interval',
+    key: 'interval'
+  },
+  {
     title: 'Actions',
     key: 'actions',
     render: (row: RowData) => {
-      return h('div', { class: 'flex gap-3' }, [
-        h(NButton, {
-          onClick: () => {
-            push({ path: `/${row.id}` })
-          },
-          type: 'primary'
-        }, 'Edit'),
-        h(NButton, {
-          onClick: () => {
-            dialog.error({
-              title: 'Delete Feed',
-              content: 'Are you sure?',
-              positiveText: 'Delete',
-              negativeText: 'Cancel',
-              draggable: false,
-              onPositiveClick: () => {
-                deleteFeed(row.id)
-              }
+      return h('div',
+        {
+          class: 'flex gap-3'
+        },
+        {
+          default: () => [
+            h(NButton, {
+              onClick: () => {
+                push({ path: `/${row.id}` })
+              },
+              type: 'primary'
+            },
+            {
+              default: () => 'Edit'
+            }),
+            h(NButton, {
+              onClick: () => {
+                dialog.error({
+                  title: 'Delete Feed',
+                  content: 'Are you sure?',
+                  positiveText: 'Delete',
+                  negativeText: 'Cancel',
+                  draggable: false,
+                  onPositiveClick: () => {
+                    deleteFeed(row.id)
+                  }
+                })
+              },
+              type: 'error'
+            },
+            {
+              default: () => 'Delete'
             })
-          },
-          type: 'error'
-        }, 'Delete')
-      ])
+          ]
+        })
     }
   }
 ]
