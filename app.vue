@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-
+import { Analytics } from '@vercel/analytics/next'
 </script>
 
 <template>
@@ -16,5 +16,6 @@
         </n-loading-bar-provider>
       </n-notification-provider>
     </n-dialog-provider>
+    <Analytics />
   </n-config-provider>
 </template>

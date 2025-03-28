@@ -18,10 +18,10 @@
     "@faker-js/faker": "^7.6.0",
     "@nuxt/test-utils": "^3.17.2",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@tailwindcss/vite": "^4.0.15",
     "@testing-library/vue": "^6.6.1",
     "@vitejs/plugin-vue": "^3.2.0",
     "@vitest/coverage-c8": "^0.26.3",
-    "@tailwindcss/vite": "^4.0.15",
     "@vitest/ui": "^0.26.3",
     "dayjs": "^1.11.13",
     "eslint": "^8.57.1",
@@ -29,17 +29,17 @@
     "jsdom": "^21.1.2",
     "nuxt": "^3.16.1",
     "nuxt-svgo": "^1.2.1",
+    "nuxtjs-naive-ui": "1.0.2",
     "playwright": "^1.51.1",
     "prisma": "^6.5.0",
+    "tailwindcss": "^4.0.15",
     "typescript": "^4.9.5",
     "unplugin-auto-import": "^0.12.2",
     "unplugin-vue-components": "^0.22.12",
     "uuid": "^9.0.1",
     "vite-svg-loader": "^3.6.0",
     "vitest": "^0.26.3",
-    "vue-tsc": "^1.8.27",
-    "nuxtjs-naive-ui": "1.0.2",
-    "tailwindcss": "^4.0.15"
+    "vue-tsc": "^1.8.27"
   },
   "dependencies": {
     "@formkit/nuxt": "^1.6.9",
@@ -48,9 +48,10 @@
     "@prisma/client": "^6.5.0",
     "@sidebase/nuxt-auth": "^0.10.1",
     "@tanstack/vue-query": "^5.69.0",
+    "@vercel/analytics": "^1.5.0",
     "monaco-editor": "^0.52.2",
+    "naive-ui": "^2.41.0",
     "trpc-nuxt": "^1.0.4",
-    "zod": "^3.24.2",
-    "naive-ui": "^2.41.0"
+    "zod": "^3.24.2"
   }
 }
