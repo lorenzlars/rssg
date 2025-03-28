@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@formkit/nuxt':
         specifier: ^1.6.9
-        version: 1.6.9(magicast@0.3.5)(rollup@4.37.0)(tailwindcss@4.0.17)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0))(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0)
+        version: 1.6.9(esbuild@0.25.1)(magicast@0.3.5)(rollup@4.37.0)(tailwindcss@4.0.17)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0))(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0(esbuild@0.25.1))
       '@formkit/vue':
         specifier: ^1.6.9
         version: 1.6.9(tailwindcss@4.0.17)(vue@3.5.13(typescript@4.9.5))
@@ -19,7 +19,7 @@ importers:
         version: 1.6.9(zod@3.24.2)
       '@prisma/client':
         specifier: ^4.16.2
-        version: 4.16.2(prisma@4.16.2)
+        version: 4.16.2(prisma@6.5.0(typescript@4.9.5))
       '@sidebase/nuxt-auth':
         specifier: ^0.10.1
         version: 0.10.1(magicast@0.3.5)(next-auth@4.21.1(next@13.5.11(@babel/core@7.26.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -80,7 +80,7 @@ importers:
         version: 3.16.1(@parcel/watcher@2.5.1)(@types/node@22.13.14)(db0@0.3.1)(eslint@8.57.1)(ioredis@5.6.0)(lightningcss@1.29.2)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.37.0)(terser@5.39.0)(typescript@4.9.5)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0))(vue-tsc@1.8.27(typescript@4.9.5))(yaml@2.7.0)
       nuxt-svgo:
         specifier: ^1.2.1
-        version: 1.2.1(magicast@0.3.5)(rollup@4.37.0)(svgo-loader@4.0.0)(vue-loader@17.4.2(@vue/compiler-sfc@3.5.13)(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0))(vue-svg-loader@0.17.0-beta.2(vue@3.5.13(typescript@4.9.5)))
+        version: 1.2.1(magicast@0.3.5)(rollup@4.37.0)(svgo-loader@4.0.0)(vue-loader@17.4.2(@vue/compiler-sfc@3.5.13)(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0(esbuild@0.25.1)))(vue-svg-loader@0.17.0-beta.2(vue@3.5.13(typescript@4.9.5)))
       nuxtjs-naive-ui:
         specifier: 1.0.2
         version: 1.0.2(magicast@0.3.5)(vue@3.5.13(typescript@4.9.5))
@@ -88,8 +88,8 @@ importers:
         specifier: ^1.51.1
         version: 1.51.1
       prisma:
-        specifier: ^4.16.2
-        version: 4.16.2
+        specifier: ^6.5.0
+        version: 6.5.0(typescript@4.9.5)
       tailwindcss:
         specifier: ^4.0.15
         version: 4.0.17
@@ -1064,11 +1064,26 @@ packages:
       prisma:
         optional: true
 
+  '@prisma/config@6.5.0':
+    resolution: {integrity: sha512-sOH/2Go9Zer67DNFLZk6pYOHj+rumSb0VILgltkoxOjYnlLqUpHPAN826vnx8HigqnOCxj9LRhT6U7uLiIIWgw==}
+
+  '@prisma/debug@6.5.0':
+    resolution: {integrity: sha512-fc/nusYBlJMzDmDepdUtH9aBsJrda2JNErP9AzuHbgUEQY0/9zQYZdNlXmKoIWENtio+qarPNe/+DQtrX5kMcQ==}
+
   '@prisma/engines-version@4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81':
     resolution: {integrity: sha512-q617EUWfRIDTriWADZ4YiWRZXCa/WuhNgLTVd+HqWLffjMSPzyM5uOWoauX91wvQClSKZU4pzI4JJLQ9Kl62Qg==}
 
-  '@prisma/engines@4.16.2':
-    resolution: {integrity: sha512-vx1nxVvN4QeT/cepQce68deh/Turxy5Mr+4L4zClFuK1GlxN3+ivxfuv+ej/gvidWn1cE1uAhW7ALLNlYbRUAw==}
+  '@prisma/engines-version@6.5.0-73.173f8d54f8d52e692c7e27e72a88314ec7aeff60':
+    resolution: {integrity: sha512-iK3EmiVGFDCmXjSpdsKGNqy9hOdLnvYBrJB61far/oP03hlIxrb04OWmDjNTwtmZ3UZdA5MCvI+f+3k2jPTflQ==}
+
+  '@prisma/engines@6.5.0':
+    resolution: {integrity: sha512-FVPQYHgOllJklN9DUyujXvh3hFJCY0NX86sDmBErLvoZjy2OXGiZ5FNf3J/C4/RZZmCypZBYpBKEhx7b7rEsdw==}
+
+  '@prisma/fetch-engine@6.5.0':
+    resolution: {integrity: sha512-3LhYA+FXP6pqY8FLHCjewyE8pGXXJ7BxZw2rhPq+CZAhvflVzq4K8Qly3OrmOkn6wGlz79nyLQdknyCG2HBTuA==}
+
+  '@prisma/get-platform@6.5.0':
+    resolution: {integrity: sha512-xYcvyJwNMg2eDptBYFqFLUCfgi+wZLcj6HDMsj0Qw0irvauG4IKmkbywnqwok0B+k+W+p+jThM2DKTSmoPCkzw==}
 
   '@rollup/plugin-alias@5.1.1':
     resolution: {integrity: sha512-PR9zDb+rOzkRb2VD+EuKB7UC41vU5DIwZ5qqCpk0KJudcWAyi8rvYOhS7+L5aZCspw1stTViLgN5v6FF1p5cgQ==}
@@ -2645,6 +2660,11 @@ packages:
   es-to-primitive@1.3.0:
     resolution: {integrity: sha512-w+5mJ3GuFL+NjVtJlvydShqE1eN3h3PbI7/5LAsYJP/2qtuMXjfL2LpHSRqo4b4eSF5K/DH1JXKUAHSB2UW50g==}
     engines: {node: '>= 0.4'}
+
+  esbuild-register@3.6.0:
+    resolution: {integrity: sha512-H2/S7Pm8a9CL1uhp9OvjwrBh5Pvx0H8qVOxNu8Wed9Y7qv56MPtq+GGM8RJpq6glYJn9Wspr8uw7l55uyinNeg==}
+    peerDependencies:
+      esbuild: '>=0.12 <1'
 
   esbuild@0.18.20:
     resolution: {integrity: sha512-ceqxoedUrcayh7Y7ZX6NdbbDzGROiyVBgC4PriJThBKSVPWnnFHZAkfI1lJT8QFkOwH4qOS2SJkS4wvpGl8BpA==}
@@ -4447,10 +4467,15 @@ packages:
   pretty-format@3.8.0:
     resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==}
 
-  prisma@4.16.2:
-    resolution: {integrity: sha512-SYCsBvDf0/7XSJyf2cHTLjLeTLVXYfqp7pG5eEVafFLeT0u/hLFz/9W196nDRGUOo1JfPatAEb+uEnTQImQC1g==}
-    engines: {node: '>=14.17'}
+  prisma@6.5.0:
+    resolution: {integrity: sha512-yUGXmWqv5F4PByMSNbYFxke/WbnyTLjnJ5bKr8fLkcnY7U5rU9rUTh/+Fja+gOrRxEgtCbCtca94IeITj4j/pg==}
+    engines: {node: '>=18.18'}
     hasBin: true
+    peerDependencies:
+      typescript: '>=5.1.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
@@ -6197,7 +6222,7 @@ snapshots:
       '@formkit/core': 1.6.9
       '@formkit/utils': 1.6.9
 
-  '@formkit/nuxt@1.6.9(magicast@0.3.5)(rollup@4.37.0)(tailwindcss@4.0.17)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0))(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0)':
+  '@formkit/nuxt@1.6.9(esbuild@0.25.1)(magicast@0.3.5)(rollup@4.37.0)(tailwindcss@4.0.17)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0))(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0(esbuild@0.25.1))':
     dependencies:
       '@formkit/core': 1.6.9
       '@formkit/i18n': 1.6.9
@@ -6206,7 +6231,7 @@ snapshots:
       chokidar: 3.6.0
       pathe: 1.1.2
       unplugin: 1.16.1
-      unplugin-formkit: 0.2.13(rollup@4.37.0)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0))(webpack@5.98.0)
+      unplugin-formkit: 0.2.13(esbuild@0.25.1)(rollup@4.37.0)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0))(webpack@5.98.0(esbuild@0.25.1))
     transitivePeerDependencies:
       - esbuild
       - magicast
@@ -6850,15 +6875,41 @@ snapshots:
 
   '@poppinss/exception@1.2.1': {}
 
-  '@prisma/client@4.16.2(prisma@4.16.2)':
+  '@prisma/client@4.16.2(prisma@6.5.0(typescript@4.9.5))':
     dependencies:
       '@prisma/engines-version': 4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81
     optionalDependencies:
-      prisma: 4.16.2
+      prisma: 6.5.0(typescript@4.9.5)
+
+  '@prisma/config@6.5.0':
+    dependencies:
+      esbuild: 0.25.1
+      esbuild-register: 3.6.0(esbuild@0.25.1)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@prisma/debug@6.5.0': {}
 
   '@prisma/engines-version@4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81': {}
 
-  '@prisma/engines@4.16.2': {}
+  '@prisma/engines-version@6.5.0-73.173f8d54f8d52e692c7e27e72a88314ec7aeff60': {}
+
+  '@prisma/engines@6.5.0':
+    dependencies:
+      '@prisma/debug': 6.5.0
+      '@prisma/engines-version': 6.5.0-73.173f8d54f8d52e692c7e27e72a88314ec7aeff60
+      '@prisma/fetch-engine': 6.5.0
+      '@prisma/get-platform': 6.5.0
+
+  '@prisma/fetch-engine@6.5.0':
+    dependencies:
+      '@prisma/debug': 6.5.0
+      '@prisma/engines-version': 6.5.0-73.173f8d54f8d52e692c7e27e72a88314ec7aeff60
+      '@prisma/get-platform': 6.5.0
+
+  '@prisma/get-platform@6.5.0':
+    dependencies:
+      '@prisma/debug': 6.5.0
 
   '@rollup/plugin-alias@5.1.1(rollup@4.37.0)':
     optionalDependencies:
@@ -8626,6 +8677,13 @@ snapshots:
       is-date-object: 1.1.0
       is-symbol: 1.1.1
 
+  esbuild-register@3.6.0(esbuild@0.25.1):
+    dependencies:
+      debug: 4.4.0
+      esbuild: 0.25.1
+    transitivePeerDependencies:
+      - supports-color
+
   esbuild@0.18.20:
     optionalDependencies:
       '@esbuild/android-arm': 0.18.20
@@ -10165,12 +10223,12 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nuxt-svgo@1.2.1(magicast@0.3.5)(rollup@4.37.0)(svgo-loader@4.0.0)(vue-loader@17.4.2(@vue/compiler-sfc@3.5.13)(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0))(vue-svg-loader@0.17.0-beta.2(vue@3.5.13(typescript@4.9.5))):
+  nuxt-svgo@1.2.1(magicast@0.3.5)(rollup@4.37.0)(svgo-loader@4.0.0)(vue-loader@17.4.2(@vue/compiler-sfc@3.5.13)(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0(esbuild@0.25.1)))(vue-svg-loader@0.17.0-beta.2(vue@3.5.13(typescript@4.9.5))):
     dependencies:
       '@nuxt/kit': '@nuxt/kit-edge@3.8.0-28284309.b3d3d7f4(magicast@0.3.5)(rollup@4.37.0)'
       svgo-loader: 4.0.0
       vite-svg-loader: 4.0.0
-      vue-loader: 17.4.2(@vue/compiler-sfc@3.5.13)(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0)
+      vue-loader: 17.4.2(@vue/compiler-sfc@3.5.13)(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0(esbuild@0.25.1))
       vue-svg-loader: 0.17.0-beta.2(vue@3.5.13(typescript@4.9.5))
     transitivePeerDependencies:
       - magicast
@@ -10758,9 +10816,15 @@ snapshots:
 
   pretty-format@3.8.0: {}
 
-  prisma@4.16.2:
+  prisma@6.5.0(typescript@4.9.5):
     dependencies:
-      '@prisma/engines': 4.16.2
+      '@prisma/config': 6.5.0
+      '@prisma/engines': 6.5.0
+    optionalDependencies:
+      fsevents: 2.3.3
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
 
   process-nextick-args@2.0.1: {}
 
@@ -11390,14 +11454,16 @@ snapshots:
       mkdirp: 3.0.1
       yallist: 5.0.0
 
-  terser-webpack-plugin@5.3.14(webpack@5.98.0):
+  terser-webpack-plugin@5.3.14(esbuild@0.25.1)(webpack@5.98.0(esbuild@0.25.1)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 4.3.0
       serialize-javascript: 6.0.2
       terser: 5.39.0
-      webpack: 5.98.0
+      webpack: 5.98.0(esbuild@0.25.1)
+    optionalDependencies:
+      esbuild: 0.25.1
 
   terser@5.39.0:
     dependencies:
@@ -11627,14 +11693,15 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  unplugin-formkit@0.2.13(rollup@4.37.0)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0))(webpack@5.98.0):
+  unplugin-formkit@0.2.13(esbuild@0.25.1)(rollup@4.37.0)(vite@6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0))(webpack@5.98.0(esbuild@0.25.1)):
     dependencies:
       pathe: 1.1.2
       unplugin: 1.16.1
     optionalDependencies:
+      esbuild: 0.25.1
       rollup: 4.37.0
       vite: 6.2.3(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0)
-      webpack: 5.98.0
+      webpack: 5.98.0(esbuild@0.25.1)
 
   unplugin-utils@0.2.4:
     dependencies:
@@ -12029,12 +12096,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vue-loader@17.4.2(@vue/compiler-sfc@3.5.13)(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0):
+  vue-loader@17.4.2(@vue/compiler-sfc@3.5.13)(vue@3.5.13(typescript@4.9.5))(webpack@5.98.0(esbuild@0.25.1)):
     dependencies:
       chalk: 4.1.2
       hash-sum: 2.0.0
       watchpack: 2.4.2
-      webpack: 5.98.0
+      webpack: 5.98.0(esbuild@0.25.1)
     optionalDependencies:
       '@vue/compiler-sfc': 3.5.13
       vue: 3.5.13(typescript@4.9.5)
@@ -12106,7 +12173,7 @@ snapshots:
 
   webpack-virtual-modules@0.6.2: {}
 
-  webpack@5.98.0:
+  webpack@5.98.0(esbuild@0.25.1):
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.7
@@ -12128,7 +12195,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.14(webpack@5.98.0)
+      terser-webpack-plugin: 5.3.14(esbuild@0.25.1)(webpack@5.98.0(esbuild@0.25.1))
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     transitivePeerDependencies:

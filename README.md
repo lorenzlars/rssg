@@ -1,5 +1,13 @@
 # rssg-app
 
+## Prisma
+
+Apply migrations
+
+```shell
+npx prisma migrate deploy
+```
+
 This is a [sidebase cheviot](https://sidebase.io/) app created by running `pnpm create sidebase@latest`. This project uses the following technologies for a great developer- and user-experience:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Nuxt 3](https://nuxt.com)
