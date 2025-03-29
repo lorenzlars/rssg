@@ -18,7 +18,17 @@ export default defineNuxtConfig({
       config: {
         bypassToken: process.env.VERCEL_BYPASS_TOKEN
       }
-    }
+    },
+    experimental: {
+      tasks: true
+    },
+    scheduledTasks: process.env.NODE_ENV === 'development'
+      ? {
+          '* * * * *': ['test']
+        }
+      : {
+          '0 * * * *': ['test']
+        }
   },
 
   modules: [

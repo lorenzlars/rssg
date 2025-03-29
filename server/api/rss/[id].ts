@@ -9,6 +9,9 @@ export default defineEventHandler(async (event) => {
   const feedData = await context.prisma.feed.findFirst({
     where: {
       id
+    },
+    include: {
+      posts: true
     }
   })
 
@@ -26,6 +29,17 @@ export default defineEventHandler(async (event) => {
     feedLinks: {
       rss: `${basePath}/api/rss/${id}`
     }
+  })
+
+  feedData.posts.forEach((post) => {
+    feed.addItem({
+      title: post.title,
+      id: post.url,
+      link: post.url,
+      description: post.description,
+      content: post.content,
+      date: post.date
+    })
   })
 
   return feed.rss2()

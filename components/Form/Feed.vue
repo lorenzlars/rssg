@@ -13,17 +13,20 @@ const emit = defineEmits<{
 }>()
 
 const defaultFormData = {
-  description: 'default description',
-  url: 'https://example.com/',
+  description: 'Tagesschau',
+  url: 'https://google.com/',
   code: `
-  const data = window.data
-
-  return data
+    return [{
+        title: 'Today',
+        description: 'Hello World',
+        link: 'http://google.com',
+        content: html
+    }]
   `,
-  interval: 10000
+  interval: 720
 }
 
-const { isPending, data } = useQuery({
+const { data } = useQuery({
   queryKey: ['feed'],
   queryFn: () => $trpc.feeds.get.query({ id: props.feedId })
 })
