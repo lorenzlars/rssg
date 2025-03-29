@@ -31,7 +31,7 @@ const columns = [
                 dialog.create({
                   title: 'Edit Feed',
                   content: () => h(FormFeed, {
-                    feed: row,
+                    feedId: row.id,
                     onCancel: () => {
                       dialog.destroyAll()
                     }
