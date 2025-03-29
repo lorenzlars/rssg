@@ -1,9 +1,15 @@
 <script lang="ts" setup>
-import { Analytics } from '@vercel/analytics/next'
+import type { GlobalThemeOverrides } from 'naive-ui'
+
+const themeOverrides: GlobalThemeOverrides = {
+  common: {
+    primaryColor: '#2f12a1'
+  }
+}
 </script>
 
 <template>
-  <n-config-provider>
+  <n-config-provider :theme-overrides="themeOverrides">
     <n-global-style />
     <n-dialog-provider>
       <n-notification-provider>
@@ -16,6 +22,5 @@ import { Analytics } from '@vercel/analytics/next'
         </n-loading-bar-provider>
       </n-notification-provider>
     </n-dialog-provider>
-    <Analytics />
   </n-config-provider>
 </template>

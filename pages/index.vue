@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { NButton } from 'naive-ui'
-import { NuxtLink } from '#components'
+import type { RowData } from 'naive-ui/es/data-table/src/interface'
+import { FormFeed, NuxtLink } from '#components'
 
 const { $trpc } = useNuxtApp()
-const { push } = useRouter()
 const dialog = useDialog()
 const queryClient = useQueryClient()
 
@@ -28,9 +28,18 @@ const columns = [
           default: () => [
             h(NButton, {
               onClick: () => {
-                push({ path: `/${row.id}` })
+                dialog.create({
+                  title: 'Edit Feed',
+                  content: () => h(FormFeed, {
+                    feed: row,
+                    onCancel: () => {
+                      dialog.destroyAll()
+                    }
+                  }),
+                  draggable: false
+                })
               },
-              type: 'primary'
+              type: 'default'
             },
             {
               default: () => 'Edit'
@@ -48,7 +57,7 @@ const columns = [
                   }
                 })
               },
-              type: 'error'
+              type: 'default'
             },
             {
               default: () => 'Delete'
@@ -60,18 +69,32 @@ const columns = [
   {
     key: 'link',
     render: (row: RowData) => {
-      return h(NuxtLink, {
-        to: {
-          path: `/api/rss/${row.id}`
-        }
+      return h('a', {
+        href: `/api/rss/${row.id}`,
+        target: '_blank'
       },
       {
         default: () => 'RSS'
       })
     }
   }
-
 ]
+
+function addFeed () {
+  dialog.create({
+    title: 'Add Feed',
+    content: () => h(FormFeed, {
+      onSuccess: () => {
+        console.log('test')
+        dialog.destroyAll()
+      },
+      onCancel: () => {
+        dialog.destroyAll()
+      }
+    }),
+    draggable: false
+  })
+}
 
 const { isPending, data } = useQuery({
   queryKey: ['feeds'],
@@ -88,19 +111,20 @@ const { mutate: deleteFeed } = useMutation({
 
 <template>
   <div class="flex flex-col">
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center mb-6">
       <h1>
         Feeds
       </h1>
-      <NuxtLink to="/add">
+
+      <n-button type="default" @click="addFeed">
         Add
-      </NuxtLink>
+      </n-button>
     </div>
+
     <n-data-table
       :loading="isPending"
       :columns="columns"
       :data="data"
-      :bordered="false"
     />
   </div>
 </template>
