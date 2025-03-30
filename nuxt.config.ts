@@ -17,8 +17,8 @@ export default defineNuxtConfig({
   ssr: false,
 
   runtimeConfig: {
-    originUrl: process.env.ORIGIN_URL ?? `https://${process.env.VERCEL_URL}`,
     cronSecret: process.env.CRON_SECRET,
+    authOrigin: process.env.AUTH_ORIGIN ?? `https://${process.env.VERCEL_URL}`,
     authSecret: process.env.AUTH_SECRET,
     authGitHubClientId: process.env.AUTH_GITHUB_CLIENT_ID,
     authGitHubClientSecret: process.env.AUTH_GITHUB_CLIENT_SECRET
@@ -75,7 +75,6 @@ export default defineNuxtConfig({
   auth: {
     isEnabled: true,
     globalAppMiddleware: true,
-    originEnvKey: 'ORIGIN_URL',
     provider: {
       type: 'authjs',
       defaultProvider: 'github',
