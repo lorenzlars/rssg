@@ -74,7 +74,8 @@ export default defineNuxtConfig({
 
   auth: {
     isEnabled: true,
-    globalAppMiddleware: true,
+    globalAppMiddleware: false,
+    originEnvKey: 'AUTH_ORIGIN',
     provider: {
       type: 'authjs',
       defaultProvider: 'github',
