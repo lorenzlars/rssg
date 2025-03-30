@@ -30,6 +30,7 @@ const columns = [
               onClick: () => {
                 dialog.create({
                   title: 'Edit Feed',
+                  class: '!w-200',
                   content: () => h(FormFeed, {
                     feedId: row.id,
                     onCancel: () => {

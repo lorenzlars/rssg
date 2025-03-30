@@ -14,6 +14,12 @@ export default defineNuxtConfig({
     }
   },
 
+  vite: {
+    plugins: [
+      tailwindcss()
+    ]
+  },
+
   ssr: false,
 
   runtimeConfig: {
@@ -34,9 +40,9 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@formkit/nuxt',
     'nuxt-svgo',
     '@sidebase/nuxt-auth',
-    '@formkit/nuxt',
     '@nuxt/test-utils',
     'nuxtjs-naive-ui'
   ],
@@ -45,7 +51,7 @@ export default defineNuxtConfig({
     transpile: ['trpc-nuxt']
   },
 
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css', '@formkit/themes/genesis'],
 
   typescript: {
     shim: false

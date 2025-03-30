@@ -23,7 +23,7 @@ const defaultFormData = {
         content: html
     }]
   `,
-  interval: 720
+  interval: 1440
 }
 
 const { data } = useQuery({
@@ -48,13 +48,38 @@ const value = computed(() => data.value ?? defaultFormData)
 </script>
 
 <template>
-  <FormKit type="form" :plugins="[zodPlugin]" :value @submit="submitHandler">
-    <FormKit type="text" name="description" />
-    <FormKit type="url" name="url" />
-    <FormKit type="code" name="code" />
-    <FormKit type="number" name="interval" number />
+  <FormKit
+    type="form"
+    :plugins="[zodPlugin]"
+    :value
+    :actions="false"
+    @submit="submitHandler"
+  >
+    <div class="flex gap-4">
+      <div class="w-full">
+        <FormKit
+          type="url"
+          name="url"
+          help="Enter the URL of the page where the feed should be generated from"
+        />
+        <FormKit type="text" name="description" help="Enter a description for the feed" />
+        <FormKit type="number" name="interval" number help="Enter the interval in minutes" />
+      </div>
+
+      <div class="w-full">
+        <FormKit type="code" name="code" help="Enter the code that generates the feed" />
+      </div>
+    </div>
+    <div class="flex justify-end gap-2">
+      <FormKit
+        type="button"
+        label="Cancel"
+        @click="emit('cancel')"
+      />
+      <FormKit
+        type="submit"
+        :label="feedId ? 'Update' : 'Add'"
+      />
+    </div>
   </FormKit>
-  <n-button type="error" @click="emit('cancel')">
-    Cancel
-  </n-button>
 </template>
