@@ -1,8 +1,7 @@
 import { Feed } from 'feed'
 
-const basePath = process.env.NUXT_YOUR_ORIGIN || ''
-
 export default defineEventHandler(async (event) => {
+  const { originUrl } = useRuntimeConfig(event)
   const { context } = event
   const { id } = context.params || {}
 
@@ -16,18 +15,18 @@ export default defineEventHandler(async (event) => {
   })
 
   if (!feedData) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: `Feed ${id} not found`
+    return createError({
+      status: 404,
+      message: `Feed ${id} not found`
     })
   }
 
   const feed = new Feed({
     title: feedData.description,
-    id: basePath,
-    link: basePath,
+    id: originUrl,
+    link: originUrl,
     feedLinks: {
-      rss: `${basePath}/api/rss/${id}`
+      rss: `${originUrl}/api/rss/${id}`
     }
   })
 

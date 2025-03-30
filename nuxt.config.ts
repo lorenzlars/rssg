@@ -9,7 +9,11 @@ export default defineNuxtConfig({
   ssr: false,
 
   runtimeConfig: {
-    authSecret: process.env.NUXT_AUTH_SECRET
+    originUrl: process.env.ORIGIN_URL ?? `https://${process.env.VERCEL_URL}`,
+    cronSecret: process.env.CRON_SECRET,
+    authSecret: process.env.AUTH_SECRET,
+    authGitHubClientId: process.env.AUTH_GITHUB_CLIENT_ID,
+    authGitHubClientSecret: process.env.AUTH_GITHUB_CLIENT_SECRET
   },
 
   nitro: {
@@ -18,17 +22,7 @@ export default defineNuxtConfig({
       config: {
         bypassToken: process.env.VERCEL_BYPASS_TOKEN
       }
-    },
-    experimental: {
-      tasks: true
-    },
-    scheduledTasks: process.env.NODE_ENV === 'development'
-      ? {
-          '* * * * *': ['test']
-        }
-      : {
-          '0 * * * *': ['test']
-        }
+    }
   },
 
   modules: [
@@ -73,7 +67,7 @@ export default defineNuxtConfig({
   auth: {
     isEnabled: true,
     globalAppMiddleware: true,
-    originEnvKey: 'NUXT_YOUR_ORIGIN',
+    originEnvKey: 'ORIGIN_URL',
     provider: {
       type: 'authjs',
       defaultProvider: 'github',

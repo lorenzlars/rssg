@@ -1,5 +1,5 @@
 import GithubProvider from 'next-auth/providers/github'
-import { PrismaAdapter } from "@auth/prisma-adapter"
+import { PrismaAdapter } from '@auth/prisma-adapter'
 import { NuxtAuthHandler } from '#auth'
 import getPrismaInstance from '~/server/utils/getPrismaInstance'
 
@@ -8,8 +8,8 @@ export default NuxtAuthHandler({
   providers: [
     // @ts-expect-error Use .default here for it to work during SSR.
     GithubProvider.default({
-      clientId: process.env.NUXT_AUTH_GITHUB_CLIENT_ID,
-      clientSecret: process.env.NUXT_AUTH_GITHUB_CLIENT_SECRET
+      clientId: useRuntimeConfig().authGitHubClientId,
+      clientSecret: useRuntimeConfig().authGitHubClientSecret
     })
   ],
   callbacks: {
