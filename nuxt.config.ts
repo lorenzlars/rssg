@@ -74,13 +74,7 @@ export default defineNuxtConfig({
 
   auth: {
     isEnabled: true,
-    globalAppMiddleware: false,
-    baseURL: process.env.AUTH_ORIGIN ? process.env.AUTH_ORIGIN : `https://${process.env.VERCEL_URL}/api/auth`,
-    provider: {
-      type: 'authjs',
-      defaultProvider: 'github',
-      addDefaultCallbackUrl: true
-    }
+    baseURL: process.env.AUTH_ORIGIN ? `${process.env.AUTH_ORIGIN}/api/auth` : `https://${process.env.VERCEL_URL}/api/auth`
   },
 
   formkit: {
@@ -88,7 +82,7 @@ export default defineNuxtConfig({
   },
 
   sourcemap: {
-    server: process.env.NODE_ENV === 'development',
+    server: true,
     client: process.env.NODE_ENV === 'development'
   },
 

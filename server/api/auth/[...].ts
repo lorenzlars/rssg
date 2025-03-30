@@ -20,5 +20,8 @@ export default NuxtAuthHandler({
       }
     }
   },
-  adapter: PrismaAdapter(getPrismaInstance())
+  adapter: PrismaAdapter(getPrismaInstance()),
+  pages: {
+    signIn: '/login'
+  }
 })
