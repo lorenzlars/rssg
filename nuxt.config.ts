@@ -75,7 +75,7 @@ export default defineNuxtConfig({
   auth: {
     isEnabled: true,
     globalAppMiddleware: false,
-    originEnvKey: 'AUTH_ORIGIN',
+    baseURL: process.env.AUTH_ORIGIN ? process.env.AUTH_ORIGIN : `https://${process.env.VERCEL_URL}/api/auth`,
     provider: {
       type: 'authjs',
       defaultProvider: 'github',
