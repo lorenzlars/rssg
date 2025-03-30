@@ -1,13 +1,9 @@
-<script lang="ts" setup="">
-
-</script>
-
 <template>
-  <div>
-    <slot />
-  </div>
+  <n-layout>
+    <n-layout-content>
+      <main class="h-screen w-screen flex justify-center items-center">
+        <slot />
+      </main>
+    </n-layout-content>
+  </n-layout>
 </template>
-
-<style lang="scss" scoped>
-
-</style>
