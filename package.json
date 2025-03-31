@@ -53,6 +53,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vicons/ionicons5": "^0.13.0",
     "feed": "^4.2.2",
+    "groq-sdk": "^0.17.0",
     "monaco-editor": "^0.52.2",
     "naive-ui": "^2.41.0",
     "next-auth": "4.21.1",

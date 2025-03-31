@@ -1,7 +1,7 @@
 import { Feed } from 'feed'
 
 export default defineEventHandler(async (event) => {
-  const { originUrl } = useRuntimeConfig(event)
+  const { originUrl, groqApiKey } = useRuntimeConfig(event)
   const { context } = event
   const { id } = context.params || {}
 

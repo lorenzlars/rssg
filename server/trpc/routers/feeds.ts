@@ -20,8 +20,11 @@ export const feeds = router({
       })
     }),
   update: protectedProcedure
-    .input(feedSchema)
+    .input(feedSchema.extend({
+      id: z.string()
+    }))
     .mutation(async ({ input, ctx }) => {
+      const { id, ...rest } = input
       const user = await ctx.prisma.user.findFirst({
         where: {
           email: ctx.user?.email
@@ -30,11 +33,11 @@ export const feeds = router({
 
       return ctx.prisma.feed.update({
         where: {
-          id: input.id,
+          id,
           owner: user
         },
         data: {
-          ...input,
+          ...rest,
           ownerId: user.id
         }
       })

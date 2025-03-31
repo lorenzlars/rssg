@@ -1,5 +1,6 @@
 export default defineEventHandler(async (event) => {
-  const { cronSecret } = useRuntimeConfig(event)
+  const { cronSecret, groqApiKey } = useRuntimeConfig(event)
+  const { parseHtml } = useAI(groqApiKey)
 
   if (event.headers.get('Authorization') !== `Bearer ${cronSecret}`) {
     return createError({ status: 401 })
@@ -11,10 +12,8 @@ export default defineEventHandler(async (event) => {
     try {
       const html = await $fetch(feed.url)
 
-      // eslint-disable-next-line no-new-func
-      const executeCode = new Function('html', feed.code)
-
-      const parsedData = executeCode(html)
+      const parsedData = await parseHtml(html)
+      // const parsedData = executeConvertion(feed, html)
 
       for (const post of parsedData) {
         await event.context.prisma.post.create({
@@ -29,3 +28,10 @@ export default defineEventHandler(async (event) => {
     }
   }
 })
+
+function executeConvertion (feed: any, html: string) {
+  // eslint-disable-next-line no-new-func
+  const executeCode = new Function('html', feed.code)
+
+  return executeCode(html)
+}

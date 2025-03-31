@@ -1,0 +1,5 @@
+### GET to execute the cron job
+GET http://localhost:3000/api/tasks/fetch
+Authorization: Bearer development
+
+###

@@ -25,6 +25,10 @@ export default function () {
         logger.info('Params: ' + e.params)
         logger.info('Duration: ' + e.duration + 'ms')
       })
+
+      instance.$on('error', (e) => {
+        logger.error(e)
+      })
     } else {
       instance = new PrismaClient()
     }

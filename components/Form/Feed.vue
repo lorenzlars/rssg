@@ -31,7 +31,15 @@ const { data, isPending } = useQuery({
 })
 
 const { mutate: addFeed } = useMutation({
-  mutationFn: formData => props.feedId ? $trpc.feeds.update.mutate(formData) : $trpc.feeds.add.mutate(formData),
+  mutationFn: formData => $trpc.feeds.add.mutate(formData),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['feeds'] })
+    emit('success')
+  }
+})
+
+const { mutate: updateFeed } = useMutation({
+  mutationFn: formData => $trpc.feeds.update.mutate({ id: props.feedId, ...formData }),
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ['feeds'] })
     emit('success')
@@ -40,12 +48,8 @@ const { mutate: addFeed } = useMutation({
 
 const [zodPlugin, submitHandler] = createZodPlugin(
   feedSchema,
-  addFeed
+  formData => (props.feedId ? updateFeed(formData) : addFeed(formData))
 )
-
-watch(data, () => {
-  console.log(data.value)
-})
 </script>
 
 <template>
