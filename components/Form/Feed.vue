@@ -12,10 +12,13 @@ const emit = defineEmits<{
   cancel: void
 }>()
 
-const defaultFormData = {
-  description: 'Tagesschau',
-  url: 'https://google.com/',
-  code: `
+const { data, isPending } = useQuery({
+  queryKey: ['feed'],
+  queryFn: () => $trpc.feeds.get.query({ id: props.feedId }),
+  initialData: () => ({
+    description: 'Tagesschau',
+    url: 'https://google.com/',
+    code: `
     return [{
         title: 'Today',
         description: 'Hello World',
@@ -23,12 +26,8 @@ const defaultFormData = {
         content: html
     }]
   `,
-  interval: 1440
-}
-
-const { data } = useQuery({
-  queryKey: ['feed'],
-  queryFn: () => $trpc.feeds.get.query({ id: props.feedId })
+    interval: 1440
+  })
 })
 
 const { mutate: addFeed } = useMutation({
@@ -44,14 +43,22 @@ const [zodPlugin, submitHandler] = createZodPlugin(
   addFeed
 )
 
-const value = computed(() => data.value ?? defaultFormData)
+watch(data, () => {
+  console.log(data.value)
+})
 </script>
 
 <template>
+  <div v-if="!data || isPending">
+    <n-skeleton text :repeat="2" />
+    <n-skeleton text style="width: 60%" />
+  </div>
+
   <FormKit
+    v-else
+    v-model="data"
     type="form"
     :plugins="[zodPlugin]"
-    :value
     :actions="false"
     @submit="submitHandler"
   >
