@@ -96,8 +96,8 @@ export const feeds = router({
         },
         select: {
           id: true,
-          description: true,
-          interval: true
+          title: true,
+          manual: true
         }
       })
     }),
@@ -105,13 +105,9 @@ export const feeds = router({
     .input(rssFeedSchema)
     .query(async ({ ctx, input }) => {
       if (input.manual) {
-        const posts = await parseHtmlByCode(input.url, input.code)
-
-        return feedToRss(ctx.event, input, posts)
+        return await parseHtmlByCode(input.url, input.code)
       }
 
-      const posts = await parseHtmlByAi(ctx.event, input.url)
-
-      return feedToRss(ctx.event, input, posts)
+      return await parseHtmlByAi(ctx.event, input.url)
     })
 })

@@ -62,9 +62,6 @@ importers:
       trpc-nuxt:
         specifier: ^1.0.4
         version: 1.0.4(@trpc/client@11.0.0(@trpc/server@11.0.0(typescript@5.8.3))(typescript@5.8.3))(@trpc/server@11.0.0(typescript@5.8.3))
-      vm:
-        specifier: ^0.1.0
-        version: 0.1.0
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -84,6 +81,9 @@ importers:
       '@testing-library/vue':
         specifier: ^6.6.1
         version: 6.6.1(@vue/compiler-sfc@3.5.13)(vue@3.5.13(typescript@5.8.3))
+      '@types/jsdom':
+        specifier: ^21.1.7
+        version: 21.1.7
       '@types/node':
         specifier: ^22.14.0
         version: 22.14.0
@@ -1503,6 +1503,9 @@ packages:
   '@types/istanbul-lib-coverage@2.0.6':
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
 
+  '@types/jsdom@21.1.7':
+    resolution: {integrity: sha512-yOriVnggzrnQ3a9OKOCxaVuSug3w3/SbOj5i7VwXWZEyUNl3bLF9V3MfxGbZKuwqJOQyRfqXyROBB1CoZLFWzA==}
+
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
@@ -1541,6 +1544,9 @@ packages:
 
   '@types/semver@7.7.0':
     resolution: {integrity: sha512-k107IF4+Xr7UHjwDc7Cfd6PRQfbdkiRabXGRjo07b4WyPahFBZCZ1sE+BNxYIJPPg73UkfOsVOLwqVc/6ETrIA==}
+
+  '@types/tough-cookie@4.0.5':
+    resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
 
   '@typescript-eslint/eslint-plugin@6.21.0':
     resolution: {integrity: sha512-oy9+hTPCUFpngkEZUSzbf9MxI65wbKFoQYsgPdILTfbUldp5ovUuphZVe4i30emU9M/kP+T64Di0mxl7dSw3MA==}
@@ -5734,9 +5740,6 @@ packages:
       jsdom:
         optional: true
 
-  vm@0.1.0:
-    resolution: {integrity: sha512-1aKVjgohVDnVhGrJLhl2k8zIrapH+7HsdnIjGvBp3XX2OCj6XGzsIbDp9rZ3r7t6qgDfXEE1EoEAEOLJm9LKnw==}
-
   vooks@0.2.12:
     resolution: {integrity: sha512-iox0I3RZzxtKlcgYaStQYKEzWWGAduMmq+jS7OrNdQo1FgGfPMubGL3uGHOU9n97NIvfFDBGnpSvkWyb/NSn/Q==}
     peerDependencies:
@@ -7427,6 +7430,12 @@ snapshots:
 
   '@types/istanbul-lib-coverage@2.0.6': {}
 
+  '@types/jsdom@21.1.7':
+    dependencies:
+      '@types/node': 22.14.0
+      '@types/tough-cookie': 4.0.5
+      parse5: 7.2.1
+
   '@types/json-schema@7.0.15': {}
 
   '@types/json5@0.0.29': {}
@@ -7461,6 +7470,8 @@ snapshots:
   '@types/resolve@1.20.2': {}
 
   '@types/semver@7.7.0': {}
+
+  '@types/tough-cookie@4.0.5': {}
 
   '@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)':
     dependencies:
@@ -12335,8 +12346,6 @@ snapshots:
       - sugarss
       - supports-color
       - terser
-
-  vm@0.1.0: {}
 
   vooks@0.2.12(vue@3.5.13(typescript@5.8.3)):
     dependencies:

@@ -9,7 +9,17 @@ onMounted(() => {
     value: modelValue.value,
     language: 'javascript',
     theme: 'vs-light',
-    windoWidth: 1280
+    windoWidth: 1280,
+    codeLens: true,
+    autoClosingBrackets: 'always',
+    scrollBeyondLastLine: false,
+    scrollbar: {
+      vertical: 'auto',
+      horizontal: 'auto'
+    },
+    minimap: {
+      enabled: false
+    }
   })
 
   editor.onDidChangeModelContent(() => {

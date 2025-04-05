@@ -13,8 +13,24 @@ const emit = defineEmits<{
 }>()
 
 const notification = useNotification()
-const testData = shallowRef()
-const feedData = shallowRef(await $trpc.feeds.get.query({ id: props.feedId }))
+const testData = shallowRef([])
+const feedData = shallowRef(props.feedId
+  ? await $trpc.feeds.get.query({ id: props.feedId })
+  : {
+      title: 'Test',
+      url: 'https://www.tagesschau.de/archiv',
+      manual: true,
+      code: `
+        return Array
+          .from(document.querySelectorAll('.container .l-eight .copytext-element-wrapper__vertical-only'))
+          .map((post) => ({
+            title: 'Test',
+            description: 'https://example.com',
+            link: 'This is a test feed',
+            content: \`\${post.textContent}\`
+          }))
+      `
+    })
 
 const { mutate: addFeed } = useMutation({
   mutationFn: formData => $trpc.feeds.add.mutate(formData),
@@ -60,21 +76,22 @@ async function executeTest () {
   >
     <div class="flex gap-4">
       <div class="w-full">
+        <FormKit type="text" name="title" help="Enter a title for the feed" />
+        <FormKit type="text" name="description" help="Enter a description for the feed" />
         <FormKit
           type="url"
           name="url"
           help="Enter the URL of the page where the feed should be generated from"
         />
-        <FormKit type="text" name="description" help="Enter a description for the feed" />
-        <FormKit type="number" name="interval" number help="Enter the interval in minutes" />
         <FormKit type="checkbox" name="manual" label="Manually" help="Parse HTML manually" />
         <FormKit v-if="value.manual" type="code" name="code" help="Enter the code that generates the feed" />
       </div>
 
-      <div class="w-full">
-        <code>
-          {{ testData }}
-        </code>
+      <div class="w-full flex flex-col gap-4 overflow-auto">
+        Count: {{ testData?.length }}
+        <n-card v-for="post of testData" :key="post.title" :title="post.title" size="small">
+          {{ post.content }}
+        </n-card>
       </div>
     </div>
     <div class="flex justify-end gap-2">

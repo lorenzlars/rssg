@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const feed = new Feed({
-    title: feedData.description,
+    title: feedData.title,
     id: originUrl,
     link: originUrl,
     feedLinks: {

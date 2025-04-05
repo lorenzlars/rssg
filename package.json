@@ -20,6 +20,7 @@
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@tailwindcss/vite": "^4.0.17",
     "@testing-library/vue": "^6.6.1",
+    "@types/jsdom": "^21.1.7",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-vue": "^3.2.0",
     "@vitest/coverage-c8": "^0.26.3",
@@ -61,7 +62,6 @@
     "naive-ui": "^2.41.0",
     "next-auth": "4.21.1",
     "trpc-nuxt": "^1.0.4",
-    "vm": "^0.1.0",
     "zod": "^3.24.2"
   }
 }

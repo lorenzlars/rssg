@@ -1,24 +1,21 @@
-import vm from 'vm'
+import vm from 'node:vm'
+import { JSDOM } from 'jsdom'
 
 export default async function (url: string, code: string) {
-  const html = await $fetch(url)
+  const html = await $fetch<string>(url)
+  const dom = new JSDOM(html)
+  const document = dom.window.document
 
-  const sandbox = {
-    items: html,
-    console
-  }
+  // TODO: run vm in a separate thread
+  // TODO: build a class for the vm sandbox
+  const context = vm.createContext({ document })
+  const script = new vm.Script(`
+    result = (function(document) { ${code} })(document)
+  `)
 
-  const script = new vm.Script(code)
+  script.runInContext(context, { timeout: 1_000 })
 
-  const context = vm.createContext(sandbox)
-
-  try {
-    const result = script.runInContext(context)
-
-    return result.map((post: any) => ({ ...post }))
-  } catch (e) {
-    console.log(e)
-  }
+  return context.result
 }
 
 function parseHtml (html: string) {
