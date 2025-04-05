@@ -9,12 +9,12 @@ const queryClient = useQueryClient()
 
 const columns = [
   {
-    title: 'Description',
-    key: 'description'
+    title: 'Title',
+    key: 'title'
   },
   {
-    title: 'Interval',
-    key: 'interval'
+    title: 'Manual',
+    key: 'manual'
   },
   {
     title: 'Actions',
