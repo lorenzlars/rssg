@@ -1,10 +1,10 @@
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
-import { feedSchema } from '../schemas'
+import { rssFeedSchema } from '../schemas'
 
 export const feeds = router({
   add: protectedProcedure
-    .input(feedSchema)
+    .input(rssFeedSchema)
     .mutation(async ({ input, ctx }) => {
       const user = await ctx.prisma.user.findFirst({
         where: {
@@ -20,7 +20,7 @@ export const feeds = router({
       })
     }),
   update: protectedProcedure
-    .input(feedSchema.extend({
+    .input(rssFeedSchema.extend({
       id: z.string()
     }))
     .mutation(async ({ input, ctx }) => {
@@ -100,5 +100,18 @@ export const feeds = router({
           interval: true
         }
       })
+    }),
+  test: protectedProcedure
+    .input(rssFeedSchema)
+    .query(async ({ ctx, input }) => {
+      if (input.manual) {
+        const posts = await parseHtmlByCode(input.url, input.code)
+
+        return feedToRss(ctx.event, input, posts)
+      }
+
+      const posts = await parseHtmlByAi(ctx.event, input.url)
+
+      return feedToRss(ctx.event, input, posts)
     })
 })

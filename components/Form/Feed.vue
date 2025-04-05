@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { feedSchema } from '~/server/trpc/schemas'
+import { rssFeedSchema } from '~/server/trpc/schemas'
 const { $trpc } = useNuxtApp()
 const queryClient = useQueryClient()
 
@@ -12,23 +12,9 @@ const emit = defineEmits<{
   cancel: void
 }>()
 
-const { data, isPending } = useQuery({
-  queryKey: ['feed'],
-  queryFn: () => $trpc.feeds.get.query({ id: props.feedId }),
-  initialData: () => ({
-    description: 'Tagesschau',
-    url: 'https://google.com/',
-    code: `
-    return [{
-        title: 'Today',
-        description: 'Hello World',
-        link: 'http://google.com',
-        content: html
-    }]
-  `,
-    interval: 1440
-  })
-})
+const notification = useNotification()
+const testData = shallowRef()
+const feedData = shallowRef(await $trpc.feeds.get.query({ id: props.feedId }))
 
 const { mutate: addFeed } = useMutation({
   mutationFn: formData => $trpc.feeds.add.mutate(formData),
@@ -47,20 +33,26 @@ const { mutate: updateFeed } = useMutation({
 })
 
 const [zodPlugin, submitHandler] = createZodPlugin(
-  feedSchema,
+  rssFeedSchema,
   formData => (props.feedId ? updateFeed(formData) : addFeed(formData))
 )
+
+async function executeTest () {
+  const { value } = toValue(useFormKitContextById('feed-form'))
+
+  try {
+    testData.value = await $trpc.feeds.test.query(value)
+  } catch (error) {
+    notification.error({ title: 'Test failed', content: error.message })
+  }
+}
 </script>
 
 <template>
-  <div v-if="!data || isPending">
-    <n-skeleton text :repeat="2" />
-    <n-skeleton text style="width: 60%" />
-  </div>
-
   <FormKit
-    v-else
-    v-model="data"
+    id="feed-form"
+    v-slot="{ value }"
+    v-model="feedData"
     type="form"
     :plugins="[zodPlugin]"
     :actions="false"
@@ -75,10 +67,14 @@ const [zodPlugin, submitHandler] = createZodPlugin(
         />
         <FormKit type="text" name="description" help="Enter a description for the feed" />
         <FormKit type="number" name="interval" number help="Enter the interval in minutes" />
+        <FormKit type="checkbox" name="manual" label="Manually" help="Parse HTML manually" />
+        <FormKit v-if="value.manual" type="code" name="code" help="Enter the code that generates the feed" />
       </div>
 
       <div class="w-full">
-        <FormKit type="code" name="code" help="Enter the code that generates the feed" />
+        <code>
+          {{ testData }}
+        </code>
       </div>
     </div>
     <div class="flex justify-end gap-2">
@@ -90,6 +86,11 @@ const [zodPlugin, submitHandler] = createZodPlugin(
       <FormKit
         type="submit"
         :label="feedId ? 'Update' : 'Add'"
+      />
+      <FormKit
+        type="button"
+        label="Test"
+        @click="executeTest"
       />
     </div>
   </FormKit>

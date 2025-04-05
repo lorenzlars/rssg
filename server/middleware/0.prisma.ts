@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client/edge'
+import type { PrismaClient } from '@prisma/client/edge'
 
 declare module 'h3' {
   interface H3EventContext {

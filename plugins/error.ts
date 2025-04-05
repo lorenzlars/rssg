@@ -1,12 +1,23 @@
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.hook('vue:error', (error) => {
-    const notification = useNotification()
-
+  nuxtApp.vueApp.config.errorHandler = (error) => {
     console.error(error)
+
+    const notification = useNotification()
 
     notification.error({
       title: 'Vue Error',
-      content: error?.message as string || 'An error occurred'
+      content: error?.message || 'An error occurred'
+    })
+  }
+
+  nuxtApp.hook('vue:error', (error) => {
+    console.error(error)
+
+    const notification = useNotification()
+
+    notification.error({
+      title: 'Vue Error',
+      content: error?.message || 'An error occurred'
     })
   })
 })

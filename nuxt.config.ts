@@ -1,10 +1,12 @@
-import AutoImport from 'unplugin-auto-import/vite'
-import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
-import Components from 'unplugin-vue-components/vite'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-03-27',
+
+  typescript: {
+    typeCheck: false,
+    shim: false
+  },
 
   app: {
     head: {
@@ -45,7 +47,7 @@ export default defineNuxtConfig({
     'nuxt-svgo',
     '@sidebase/nuxt-auth',
     '@nuxt/test-utils',
-    'nuxtjs-naive-ui'
+    '@bg-dev/nuxt-naiveui'
   ],
 
   build: {
@@ -53,31 +55,6 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css', '@formkit/themes/genesis'],
-
-  typescript: {
-    shim: false
-  },
-
-  vite: {
-    plugins: [
-      tailwindcss(),
-      AutoImport({
-        imports: [
-          {
-            'naive-ui': [
-              'useDialog',
-              'useMessage',
-              'useNotification',
-              'useLoadingBar'
-            ]
-          }
-        ]
-      }),
-      Components({
-        resolvers: [NaiveUiResolver()]
-      })
-    ]
-  },
 
   auth: {
     isEnabled: true,

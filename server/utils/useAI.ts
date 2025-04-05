@@ -1,8 +1,12 @@
 import { Groq } from 'groq-sdk'
+import Ajv from 'ajv'
 import postSchema from './postSchema.json'
+import tryJsonParse from '~/server/utils/tryJsonParse'
 
-export default function (apiKey: string): Array<any> {
+export default function (apiKey: string) {
   const client = new Groq({ apiKey })
+  const ajv = new Ajv()
+  const validate = ajv.compile(postSchema)
 
   async function parseHtml (html: string) {
     const chatCompletion = await client.chat.completions.create({
@@ -13,7 +17,30 @@ export default function (apiKey: string): Array<any> {
       model: 'llama-3.3-70b-versatile'
     })
 
-    return JSON.parse(chatCompletion.choices[0].message.content)
+    const result = chatCompletion.choices[0].message.content
+
+    if (!result) {
+      console.warn('No result from AI')
+      return []
+    }
+
+    const jsonResponse = tryJsonParse<any[]>(result)
+
+    if (!jsonResponse || !Array.isArray(jsonResponse)) {
+      console.warn('AI returned invalid JSON')
+      return []
+    }
+
+    for (const json of jsonResponse) {
+      const valid = validate(json)
+
+      if (!valid) {
+        console.warn('AI returned data which are not matching the expected schema')
+        return []
+      }
+    }
+
+    return jsonResponse
   }
 
   return { parseHtml }

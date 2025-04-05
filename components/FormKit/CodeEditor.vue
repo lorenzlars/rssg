@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  context: any
+  context: { _value: string }
 }>()
 defineOptions({
   inheritAttrs: false

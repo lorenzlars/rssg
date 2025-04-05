@@ -1,18 +1,8 @@
-<script lang="ts" setup>
-import type { GlobalThemeOverrides } from 'naive-ui'
-
-const themeOverrides: GlobalThemeOverrides = {
-  common: {
-    primaryColor: '#2f12a1'
-  }
-}
-</script>
-
 <template>
-  <n-config-provider :theme-overrides="themeOverrides">
-    <n-global-style />
-    <n-dialog-provider>
-      <n-notification-provider>
+  <naive-config>
+    <n-notification-provider :max="1" placement="bottom-left">
+      <naive-notification />
+      <n-dialog-provider>
         <n-loading-bar-provider>
           <n-loading-bar-provider>
             <NuxtLayout>
@@ -20,7 +10,7 @@ const themeOverrides: GlobalThemeOverrides = {
             </NuxtLayout>
           </n-loading-bar-provider>
         </n-loading-bar-provider>
-      </n-notification-provider>
-    </n-dialog-provider>
-  </n-config-provider>
+      </n-dialog-provider>
+    </n-notification-provider>
+  </naive-config>
 </template>
