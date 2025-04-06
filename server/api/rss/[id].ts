@@ -1,7 +1,7 @@
 import { Feed } from 'feed'
 
 export default defineEventHandler(async (event) => {
-  const { originUrl, groqApiKey } = useRuntimeConfig(event)
+  const { originUrl } = useRuntimeConfig(event)
   const { context } = event
   const { id } = context.params || {}
 
@@ -27,16 +27,17 @@ export default defineEventHandler(async (event) => {
     link: originUrl,
     feedLinks: {
       rss: `${originUrl}/api/rss/${id}`
-    }
+    },
+    copyright: feedData.url
   })
 
   feedData.posts.forEach((post) => {
     feed.addItem({
-      title: post.title,
-      id: post.url,
-      link: post.url,
-      description: post.description,
-      content: post.content,
+      title: post.title ?? '',
+      id: post.id,
+      link: post.link ?? '',
+      description: post.description ?? '',
+      content: post.content ?? '',
       date: post.date
     })
   })

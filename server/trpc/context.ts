@@ -7,6 +7,7 @@ export async function createContext (event: H3Event) {
   const session = await $fetch('/api/auth/session', { headers: event.headers })
 
   return {
+    event,
     session,
     prisma: event.context.prisma
   }

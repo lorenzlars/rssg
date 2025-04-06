@@ -15,7 +15,7 @@ export const feeds = router({
       return ctx.prisma.feed.create({
         data: {
           ...input,
-          ownerId: user.id
+          ownerId: user!.id
         }
       })
     }),
@@ -34,11 +34,11 @@ export const feeds = router({
       return ctx.prisma.feed.update({
         where: {
           id,
-          owner: user
+          owner: user!
         },
         data: {
           ...rest,
-          ownerId: user.id
+          ownerId: user!.id
         }
       })
     }),
@@ -58,7 +58,7 @@ export const feeds = router({
       return ctx.prisma.feed.delete({
         where: {
           id: input.id,
-          owner: user
+          owner: user!
         }
       })
     }),
@@ -78,7 +78,7 @@ export const feeds = router({
       return ctx.prisma.feed.findFirst({
         where: {
           id: input.id,
-          owner: user
+          owner: user!
         }
       })
     }),
@@ -92,7 +92,7 @@ export const feeds = router({
 
       return ctx.prisma.feed.findMany({
         where: {
-          owner: user
+          owner: user!
         },
         select: {
           id: true,
@@ -105,7 +105,7 @@ export const feeds = router({
     .input(rssFeedSchema)
     .query(async ({ ctx, input }) => {
       if (input.manual) {
-        return await parseHtmlByCode(input.url, input.code)
+        return await parseHtmlByCode(input.url, input.code!)
       }
 
       return await parseHtmlByAi(ctx.event, input.url)

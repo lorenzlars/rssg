@@ -20,13 +20,15 @@ export default function () {
         log: ['query']
       })
 
-      instance.$on('query', (e) => {
+      // @ts-ignore
+      instance.$on('query', (e: any) => {
         logger.info('Query: ' + e.query)
         logger.info('Params: ' + e.params)
         logger.info('Duration: ' + e.duration + 'ms')
       })
 
-      instance.$on('error', (e) => {
+      // @ts-ignore
+      instance.$on('error', (e: any) => {
         logger.error(e)
       })
     } else {

@@ -1,6 +1,8 @@
+import { H3Event } from 'h3'
+import { RssFeed } from '~/server/trpc/schemas'
+
 export default defineEventHandler(async (event) => {
-  const { cronSecret, groqApiKey } = useRuntimeConfig(event)
-  const { parseHtml } = useAI(groqApiKey)
+  const { cronSecret } = useRuntimeConfig(event)
 
   if (event.headers.get('Authorization') !== `Bearer ${cronSecret}`) {
     return createError({ status: 401 })
@@ -10,12 +12,9 @@ export default defineEventHandler(async (event) => {
 
   for (const feed of feeds) {
     try {
-      const html = await $fetch(feed.url)
+      const posts = await getPosts(event, feed)
 
-      const parsedData = await parseHtml(html)
-      // const parsedData = executeConvertion(feed, html)
-
-      for (const post of parsedData) {
+      for (const post of posts) {
         await event.context.prisma.post.create({
           data: {
             ...post,
@@ -29,9 +28,10 @@ export default defineEventHandler(async (event) => {
   }
 })
 
-function executeConvertion (feed: any, html: string) {
-  // eslint-disable-next-line no-new-func
-  const executeCode = new Function('html', feed.code)
+async function getPosts (event: H3Event, feed: RssFeed) {
+  if (feed.manual) {
+    return await parseHtmlByCode(feed.url, feed.code!)
+  }
 
-  return executeCode(html)
+  return await parseHtmlByAi(event, feed.url)
 }

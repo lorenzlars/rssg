@@ -1,7 +1,11 @@
 import vm from 'node:vm'
 import { JSDOM } from 'jsdom'
+import Ajv from 'ajv'
+import postSchema from './postSchema.json'
 
 export default async function (url: string, code: string) {
+  const ajv = new Ajv()
+  const validate = ajv.compile(postSchema)
   const html = await $fetch<string>(url)
   const dom = new JSDOM(html)
   const document = dom.window.document
@@ -15,9 +19,25 @@ export default async function (url: string, code: string) {
 
   script.runInContext(context, { timeout: 1_000 })
 
-  return context.result
-}
+  if (!context.result || !Array.isArray(context.result)) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid result',
+      message: 'The result is not an array'
+    })
+  }
 
-function parseHtml (html: string) {
-  return new DOMParser().parseFromString(html, 'text/html').body.childNodes[0]
+  for (const json of context.result) {
+    const valid = validate(json)
+
+    if (!valid) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Invalid result',
+        message: 'The result is not valid'
+      })
+    }
+  }
+
+  return context.result
 }

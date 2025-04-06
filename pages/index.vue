@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { NButton } from 'naive-ui'
 import type { RowData } from 'naive-ui/es/data-table/src/interface'
-import { FormFeed, NuxtLink } from '#components'
+import { FormFeed } from '#components'
 
 const { $trpc } = useNuxtApp()
 const dialog = useDialog()
@@ -86,7 +86,6 @@ function addFeed () {
     title: 'Add Feed',
     content: () => h(FormFeed, {
       onSuccess: () => {
-        console.log('test')
         dialog.destroyAll()
       },
       onCancel: () => {
