@@ -97,7 +97,10 @@ export const feeds = router({
         select: {
           id: true,
           title: true,
-          manual: true
+          manual: true,
+          _count: {
+            select: { posts: true }
+          }
         }
       })
     }),

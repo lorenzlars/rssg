@@ -4,7 +4,7 @@ const { $trpc } = useNuxtApp()
 const queryClient = useQueryClient()
 
 const props = defineProps<{
-  feedId: string
+  feedId?: string
 }>()
 
 const emit = defineEmits<{
@@ -12,8 +12,7 @@ const emit = defineEmits<{
   cancel: void
 }>()
 
-const notification = useNotification()
-const testData = shallowRef([])
+const form = useFormKitContextById('feed-form')
 const feedData = shallowRef(props.feedId
   ? await $trpc.feeds.get.query({ id: props.feedId })
   : {
@@ -53,15 +52,11 @@ const [zodPlugin, submitHandler] = createZodPlugin(
   formData => (props.feedId ? updateFeed(formData) : addFeed(formData))
 )
 
-async function executeTest () {
-  const { value } = toValue(useFormKitContextById('feed-form'))
-
-  try {
-    testData.value = await $trpc.feeds.test.query(value)
-  } catch (error) {
-    notification.error({ title: 'Test failed', content: error.message })
-  }
-}
+const { error: testError, data: testData, refetch: executeTest, isRefetching } = useQuery({
+  queryKey: ['test', props.feedId],
+  queryFn: () => $trpc.feeds.test.query(form.value!.value),
+  enabled: false
+})
 </script>
 
 <template>
@@ -87,14 +82,27 @@ async function executeTest () {
         <FormKit v-if="value.manual" type="code" name="code" help="Enter the code that generates the feed" />
       </div>
 
-      <div class="w-full flex flex-col gap-4 overflow-auto">
-        Count: {{ testData?.length }}
-        <n-card v-for="post of testData" :key="post.title" :title="post.title" size="small">
-          {{ post.content }}
-        </n-card>
+      <div class="w-full flex flex-col gap-4">
+        <n-alert v-if="testError" title="Error" type="error">
+          {{ testError?.message }}
+        </n-alert>
+        <n-alert v-if="testData?.length > 0" title="Details" type="info">
+          <span>Count: {{ testData?.length }}</span>
+        </n-alert>
+        <div class="h-[20rem] flex flex-col gap-4 overflow-y-auto">
+          <n-card v-for="post of testData" :key="post.title" :title="post.title" size="small">
+            {{ post.content }}
+          </n-card>
+        </div>
       </div>
     </div>
-    <div class="flex justify-end gap-2">
+    <div class="flex justify-end gap-4">
+      <n-button
+        :loading="isRefetching"
+        @click="() => executeTest()"
+      >
+        Test
+      </n-button>
       <FormKit
         type="button"
         label="Cancel"
@@ -103,11 +111,6 @@ async function executeTest () {
       <FormKit
         type="submit"
         :label="feedId ? 'Update' : 'Add'"
-      />
-      <FormKit
-        type="button"
-        label="Test"
-        @click="executeTest"
       />
     </div>
   </FormKit>

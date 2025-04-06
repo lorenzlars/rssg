@@ -1,5 +1,3 @@
-import tailwindcss from '@tailwindcss/vite'
-
 export default defineNuxtConfig({
   compatibilityDate: '2025-03-27',
 
@@ -14,12 +12,6 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
       ]
     }
-  },
-
-  vite: {
-    plugins: [
-      tailwindcss()
-    ]
   },
 
   ssr: false,
@@ -47,14 +39,17 @@ export default defineNuxtConfig({
     'nuxt-svgo',
     '@sidebase/nuxt-auth',
     '@nuxt/test-utils',
-    '@bg-dev/nuxt-naiveui'
+    '@bg-dev/nuxt-naiveui',
+    '@nuxtjs/tailwindcss'
   ],
 
   build: {
     transpile: ['trpc-nuxt']
   },
 
-  css: ['~/assets/css/main.css', '@formkit/themes/genesis'],
+  css: [
+    '~/assets/css/main.css'
+  ],
 
   auth: {
     isEnabled: true,
@@ -81,5 +76,9 @@ export default defineNuxtConfig({
         imports: ['createZodPlugin']
       }
     ]
+  },
+
+  tailwindcss: {
+    viewer: process.env.NODE_ENV === 'development'
   }
 })

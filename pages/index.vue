@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import { NButton } from 'naive-ui'
+import { NButton, NCheckbox } from 'naive-ui'
 import type { RowData } from 'naive-ui/es/data-table/src/interface'
 import { FormFeed } from '#components'
+import FeedDialog from '~/pages/FeedDialog.vue'
 
 const { $trpc } = useNuxtApp()
 const dialog = useDialog()
 const queryClient = useQueryClient()
+const showDialog = shallowRef(false)
 
 const columns = [
   {
@@ -14,7 +16,18 @@ const columns = [
   },
   {
     title: 'Manual',
-    key: 'manual'
+    key: 'manual',
+    render: (row: RowData) => h(
+      NCheckbox,
+      {
+        checked: row.manual,
+        disabled: true
+      }
+    )
+  },
+  {
+    title: 'Posts',
+    key: '_count.posts'
   },
   {
     title: 'Actions',
@@ -28,17 +41,7 @@ const columns = [
           default: () => [
             h(NButton, {
               onClick: () => {
-                dialog.create({
-                  title: 'Edit Feed',
-                  class: '!w-200',
-                  content: () => h(FormFeed, {
-                    feedId: row.id,
-                    onCancel: () => {
-                      dialog.destroyAll()
-                    }
-                  }),
-                  draggable: false
-                })
+                showDialog.value = true
               },
               type: 'default'
             },
@@ -81,21 +84,6 @@ const columns = [
   }
 ]
 
-function addFeed () {
-  dialog.create({
-    title: 'Add Feed',
-    content: () => h(FormFeed, {
-      onSuccess: () => {
-        dialog.destroyAll()
-      },
-      onCancel: () => {
-        dialog.destroyAll()
-      }
-    }),
-    draggable: false
-  })
-}
-
 const { isPending, data } = useQuery({
   queryKey: ['feeds'],
   queryFn: () => $trpc.feeds.getAll.query()
@@ -116,7 +104,7 @@ const { mutate: deleteFeed } = useMutation({
         Feeds
       </h1>
 
-      <n-button type="default" @click="addFeed">
+      <n-button type="default" @click="showDialog = true">
         Add
       </n-button>
     </div>
@@ -126,5 +114,6 @@ const { mutate: deleteFeed } = useMutation({
       :columns="columns"
       :data="data"
     />
+    <FeedDialog v-model:show="showDialog" />
   </div>
 </template>
